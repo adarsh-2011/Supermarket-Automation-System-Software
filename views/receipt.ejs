@@ -1,0 +1,35 @@
+<%- include('partials/head')  %> 
+    <div class="container">
+        <div class="row">
+                <table class="table table-hover" id="billData">
+                    <tr>
+                        <th>Item Id</th>
+                        <th>Item Name</th>
+                        <th>Billed Quantity</th>
+                        <th>Metric Type</th>
+                        <th>Unit Price</th>
+                        <th>Category</th>
+                    </tr>
+                    <% for(let item of billObject.items){ %>
+                        <tr>
+                            <td><%= item.id%></td>
+                            <td><%= item.name%></td>
+                            <td><%= item.quantity%></td>
+                            <td><%= item.unit%></td>
+                            <td><%= item.unitPrice%></td>
+                            <td><%= item.category%></td>
+                        </tr>
+                    <% } %>
+                </table>
+        </div>
+        <div class="row form-floating">
+                <button class="btn btn-dark">Print Receipt</button>
+        </div>
+        <form action="/home/clerk" method="get" id="homeForm">
+            <div class="row form-floating">
+                <button class="btn btn-primary">Back to Home</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

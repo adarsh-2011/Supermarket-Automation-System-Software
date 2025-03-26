@@ -1,0 +1,104 @@
+<%- include('partials/head')  %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<h1 class="heading">Sales Statistics</h1>
+<div class="container">
+    <div class="row">
+        <form class = "row" action="/home/statistics" method="post">
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="startYear">Start Year</label>
+                    <select class="form-select" name="startYear" id="startYear">
+                    <option selected>1998</option>
+                    <% for(let i = 1998; i<= 2022; i++){ %>
+                        <option value="<%= i  %> "><%= i  %> </option>
+                    <% } %> 
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="endYear">End Year</label>
+                    <select class="form-select" name="endYear" id="endYear">
+                    <option selected>1998</option>
+                    <% let currentYear = new Date().getFullYear(); %> 
+                    <% for(let i = 1999; i<= currentYear; i++){ %>
+                        <option value="<%= i  %> "><%= i  %> </option>
+                    <% } %> 
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <button class="btn btn-dark" id="filter">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div id = "errorMessage"></div>
+    <div class="container">
+        <div class="row">
+            <table class="table table-striped table-hover" id="salesData">
+                <tr>
+                    <th>Item Id</th>
+                    <th>Item Name</th>
+                    <th>Total Sales</th>
+                    <th>Metric Unit</th>
+                </tr>
+                <% for(let item of stats){ %>
+                    <tr>
+                        <td><%= item.id%></td>
+                        <td><%= item.name%></td>
+                        <td><%= item.sales%></td>
+                        <td><%= item.unit%></td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+        <div class="row">
+            <section class="heading"><b>Sales Statistics between <%= startYear  %> and <%= endYear %></b></section>
+        </div>
+        <div class="row">
+            <canvas class="container" id="myChart" style="width:100%;max-width:600px"></canvas>
+            <script  >
+                let xValues = '<%=names%>'.split(",");
+                let yValues = '<%=sales%>'.split(",");
+                let barColors = "darkblue";
+                
+                console.log(yValues,yValues.length);
+                new Chart("myChart", {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                        }]
+                    },
+                    options: {
+                        legend: {display: false},
+                        scales: {
+                        yAxes: [{
+                            ticks: {
+                            beginAtZero: true
+                            }
+                        }],
+                        }
+                    }
+                });
+            </script>
+        </div>
+        <div class="row">
+            <form action="/home/statistics/print" method="post" id="printSalesForm">
+                <div class="row">
+                    <button class="btn btn-success" id="home">Print Sales Statistics</button>
+                </div>
+            </form>
+        </div>
+        <form action="/home/manager" method="get" id="homeForm">
+            <div class="row form-floating">
+                <button class="btn btn-primary" id="home">Back to Home</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
