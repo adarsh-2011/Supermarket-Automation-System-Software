@@ -47,8 +47,8 @@ In case the data.json file crashes during file modification, there is a backup.j
 
 Contributors names and contact info
 
-ex. Adarsh Srivastava  
-ex. [adarsh-2011](https://www.github.com/adarsh-2011)
+- Adarsh Srivastava  
+- [adarsh-2011](https://www.github.com/adarsh-2011)
 
 ## Version History
 
